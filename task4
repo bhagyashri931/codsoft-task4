@@ -1,9 +1,12 @@
 Task 4: Rock-Paper-Scissors Game
+import tkinter as tk
 import random
 
+# Function to get the computer's choice
 def get_computer_choice():
     return random.choice(['rock', 'paper', 'scissors'])
 
+# Function to determine the winner
 def determine_winner(user_choice, computer_choice):
     if user_choice == computer_choice:
         return "It's a tie!"
@@ -14,21 +17,29 @@ def determine_winner(user_choice, computer_choice):
     else:
         return "You lose!"
 
-def main():
-    while True:
-        user_choice = input("Choose rock, paper, or scissors: ").lower()
-        if user_choice not in ['rock', 'paper', 'scissors']:
-            print("Invalid choice. Please try again.")
-            continue
+# Function to handle the user's choice
+def play_game(user_choice):
+    computer_choice = get_computer_choice()
+    result = determine_winner(user_choice, computer_choice)
+    result_label.config(text=f"Computer chose: {computer_choice}\n{result}")
 
-        computer_choice = get_computer_choice()
-        print(f"Computer chose: {computer_choice}")
-        result = determine_winner(user_choice, computer_choice)
-        print(result)
+# Set up the main application window
+root = tk.Tk()
+root.title("Rock-Paper-Scissors Game")
 
-        again = input("Do you want to play again? (yes/no): ")
-        if again.lower() != 'yes':
-            break
+# Create buttons for rock, paper, and scissors
+rock_button = tk.Button(root, text="Rock", command=lambda: play_game('rock'))
+paper_button = tk.Button(root, text="Paper", command=lambda: play_game('paper'))
+scissors_button = tk.Button(root, text="Scissors", command=lambda: play_game('scissors'))
 
-if __name__ == "__main__":
-    main()
+# Create a label to display the result
+result_label = tk.Label(root, text="", font=('Helvetica', 12))
+
+# Arrange buttons and label in the window
+rock_button.pack(pady=10)
+paper_button.pack(pady=10)
+scissors_button.pack(pady=10)
+result_label.pack(pady=20)
+
+# Run the application
+root.mainloop()
